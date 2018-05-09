@@ -1,0 +1,213 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="FussballBundesligaDatenModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Tabelle">
+          <Key>
+            <PropertyRef Name="Platz" />
+          </Key>
+          <Property Name="Platz" Type="int" Nullable="false" />
+          <Property Name="VereinID" Type="int" Nullable="false" />
+          <Property Name="Punkte" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Team">
+          <Key>
+            <PropertyRef Name="VereinID" />
+          </Key>
+          <Property Name="VereinID" Type="int" Nullable="false" />
+          <Property Name="TeamNameLang" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tipps">
+          <Key>
+            <PropertyRef Name="PlayerID" />
+          </Key>
+          <Property Name="PlayerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="1" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="2" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="3" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="4" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="5" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="6" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="7" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="8" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="9" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="10" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="11" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="12" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="13" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="14" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="15" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="16" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="17" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="18" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_dbo_Team_dbo_Team_VereinID">
+          <End Role="Team" Type="Self.Team" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Tabelle" Type="Self.Tabelle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Team">
+              <PropertyRef Name="VereinID" />
+            </Principal>
+            <Dependent Role="Tabelle">
+              <PropertyRef Name="VereinID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FussballBundesligaDatenModelStoreContainer">
+          <EntitySet Name="Tabelle" EntityType="Self.Tabelle" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Team" EntityType="Self.Team" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tipps" EntityType="Self.Tipps" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_dbo_Team_dbo_Team_VereinID" Association="Self.FK_dbo_Team_dbo_Team_VereinID">
+            <End Role="Team" EntitySet="Team" />
+            <End Role="Tabelle" EntitySet="Tabelle" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="FussballBundesligaDatenModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Tabelle">
+          <Key>
+            <PropertyRef Name="Platz" />
+          </Key>
+          <Property Name="Platz" Type="Int32" Nullable="false" />
+          <Property Name="VereinID" Type="Int32" Nullable="false" />
+          <Property Name="Punkte" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Team" Relationship="Self.FK_dbo_Team_dbo_Team_VereinID" FromRole="Tabelle" ToRole="Team" />
+        </EntityType>
+        <EntityType Name="Team">
+          <Key>
+            <PropertyRef Name="VereinID" />
+          </Key>
+          <Property Name="VereinID" Type="Int32" Nullable="false" />
+          <Property Name="TeamNameLang" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Tabelles" Relationship="Self.FK_dbo_Team_dbo_Team_VereinID" FromRole="Team" ToRole="Tabelle" />
+        </EntityType>
+        <EntityType Name="Tipp">
+          <Key>
+            <PropertyRef Name="PlayerID" />
+          </Key>
+          <Property Name="PlayerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="C1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="C2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="C3" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="C4" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="C5" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="C6" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="C7" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="C8" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="C9" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="C10" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="C11" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="C12" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="C13" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="C14" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="C15" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="C16" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="C17" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="C18" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_dbo_Team_dbo_Team_VereinID">
+          <End Role="Team" Type="Self.Team" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Tabelle" Type="Self.Tabelle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Team">
+              <PropertyRef Name="VereinID" />
+            </Principal>
+            <Dependent Role="Tabelle">
+              <PropertyRef Name="VereinID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FussballBundesligaDatenEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Tabelles" EntityType="Self.Tabelle" />
+          <EntitySet Name="Teams" EntityType="Self.Team" />
+          <EntitySet Name="Tipps" EntityType="Self.Tipp" />
+          <AssociationSet Name="FK_dbo_Team_dbo_Team_VereinID" Association="Self.FK_dbo_Team_dbo_Team_VereinID">
+            <End Role="Team" EntitySet="Teams" />
+            <End Role="Tabelle" EntitySet="Tabelles" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="FussballBundesligaDatenModelStoreContainer" CdmEntityContainer="FussballBundesligaDatenEntities1">
+          <EntitySetMapping Name="Tabelles">
+            <EntityTypeMapping TypeName="FussballBundesligaDatenModel.Tabelle">
+              <MappingFragment StoreEntitySet="Tabelle">
+                <ScalarProperty Name="Platz" ColumnName="Platz" />
+                <ScalarProperty Name="VereinID" ColumnName="VereinID" />
+                <ScalarProperty Name="Punkte" ColumnName="Punkte" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Teams">
+            <EntityTypeMapping TypeName="FussballBundesligaDatenModel.Team">
+              <MappingFragment StoreEntitySet="Team">
+                <ScalarProperty Name="VereinID" ColumnName="VereinID" />
+                <ScalarProperty Name="TeamNameLang" ColumnName="TeamNameLang" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tipps">
+            <EntityTypeMapping TypeName="FussballBundesligaDatenModel.Tipp">
+              <MappingFragment StoreEntitySet="Tipps">
+                <ScalarProperty Name="PlayerID" ColumnName="PlayerID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="C1" ColumnName="1" />
+                <ScalarProperty Name="C2" ColumnName="2" />
+                <ScalarProperty Name="C3" ColumnName="3" />
+                <ScalarProperty Name="C4" ColumnName="4" />
+                <ScalarProperty Name="C5" ColumnName="5" />
+                <ScalarProperty Name="C6" ColumnName="6" />
+                <ScalarProperty Name="C7" ColumnName="7" />
+                <ScalarProperty Name="C8" ColumnName="8" />
+                <ScalarProperty Name="C9" ColumnName="9" />
+                <ScalarProperty Name="C10" ColumnName="10" />
+                <ScalarProperty Name="C11" ColumnName="11" />
+                <ScalarProperty Name="C12" ColumnName="12" />
+                <ScalarProperty Name="C13" ColumnName="13" />
+                <ScalarProperty Name="C14" ColumnName="14" />
+                <ScalarProperty Name="C15" ColumnName="15" />
+                <ScalarProperty Name="C16" ColumnName="16" />
+                <ScalarProperty Name="C17" ColumnName="17" />
+                <ScalarProperty Name="C18" ColumnName="18" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
