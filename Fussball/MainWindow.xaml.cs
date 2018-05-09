@@ -26,10 +26,11 @@ namespace Fussball
             using (var db = new FussballBundesligaDatenEntities1())
             {
                 var queue = from b in db.Teams orderby b.TeamNameLang select b;
+                
 
                 foreach ( var item in queue)
                 {
-                    BOX.Text = item + System.Environment.NewLine;
+                    BOX.Text += item.TeamNameLang + System.Environment.NewLine;
                 }
             }
         }
